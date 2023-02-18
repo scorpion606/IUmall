@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scorpion.mapper.PmsAttrMapper">
+  <resultMap id="BaseResultMap" type="com.scorpion.entity.PmsAttr">
+    <id column="attr_id" jdbcType="BIGINT" property="attrId" />
+    <result column="attr_name" jdbcType="CHAR" property="attrName" />
+    <result column="search_type" jdbcType="TINYINT" property="searchType" />
+    <result column="value_type" jdbcType="TINYINT" property="valueType" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="value_select" jdbcType="CHAR" property="valueSelect" />
+    <result column="attr_type" jdbcType="TINYINT" property="attrType" />
+    <result column="enable" jdbcType="BIGINT" property="enable" />
+    <result column="catelog_id" jdbcType="BIGINT" property="catelogId" />
+    <result column="show_desc" jdbcType="TINYINT" property="showDesc" />
+  </resultMap>
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scorpion.mapper.ProductParamsMapper">
+  <resultMap id="BaseResultMap" type="com.scorpion.entity.ProductParams">
+    <id column="params_id" jdbcType="INTEGER" property="paramsId" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="brand" jdbcType="VARCHAR" property="brand" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="generic_spec" jdbcType="VARCHAR" property="genericSpec" />
+    <result column="special_spec" jdbcType="VARCHAR" property="specialSpec" />
+    <result column="packing_list" jdbcType="VARCHAR" property="packingList" />
+    <result column="after_service" jdbcType="VARCHAR" property="afterService" />
+    <result column="params_img" jdbcType="VARCHAR" property="paramsImg" />
+    <result column="REVISION" jdbcType="INTEGER" property="revision" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="CREATED_TIME" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="UPDATED_TIME" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+</mapper>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scorpion.mapper.ShoppingCartMapper">
+  <!--购物车映射配置-->
+  <resultMap id="BaseResultMap" type="com.scorpion.entity.ShoppingCart">
+    <id column="cart_id" jdbcType="INTEGER" property="cartId" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="sku_id" jdbcType="INTEGER" property="skuId" />
+    <result column="sku_props" jdbcType="VARCHAR" property="skuProps" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="cart_number" jdbcType="INTEGER" property="cartNumber" />
+    <result column="cart_time" jdbcType="TIMESTAMP" property="cartTime" />
+    <result column="product_price" jdbcType="DECIMAL" property="productPrice" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="REVISION" jdbcType="INTEGER" property="revision" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="CREATED_TIME" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="UPDATED_TIME" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+
+  <!--购物车-商品名称-商品主图映射配置-->
+  <resultMap id="ShoppingCartToProductToProductImgMap" type="com.scorpion.entity.ShoppingCartVo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="cart_id" jdbcType="INTEGER" property="cartId" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="sku_id" jdbcType="INTEGER" property="skuId" />
+    <result column="sku_props" jdbcType="VARCHAR" property="skuProps" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="cart_number" jdbcType="INTEGER" property="cartNumber" />
+    <result column="cart_time" jdbcType="TIMESTAMP" property="cartTime" />
+    <result column="product_price" jdbcType="DECIMAL" property="productPrice" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="REVISION" jdbcType="INTEGER" property="revision" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="CREATED_TIME" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="UPDATED_TIME" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="product_content" jdbcType="VARCHAR" property="productContent" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName"/>
+    <result column="url" jdbcType="VARCHAR" property="productImg"/>
+    <result column="original_price" jdbcType="DECIMAL" property="originalPrice"/>
+    <result column="sell_price" jdbcType="DECIMAL" property="sellPrice"/>
+    <result column="sku_name" jdbcType="VARCHAR" property="skuName"/>
+    <result column="sku_img" jdbcType="VARCHAR" property="skuImg"/>
+    <result column="stock" jdbcType="INTEGER" property="stock"/>
+  </resultMap>
+
+  <!--根据用户Id查找购物车列表信息-->
+  <select id="selectShoppingCartByUserId" parameterType="INTEGER" resultMap="ShoppingCartToProductToProductImgMap">
+    SELECT
+      c.cart_id,
+      c.product_id,
+      c.sku_id,
+      c.sku_props,
+      c.user_id,
+      c.cart_number,
+      c.cart_time,
+      c.product_price,
+      c.status,
+      c.created_time,
+      c.created_by,
+      c.updated_time,
+      c.updated_by,
+      p.product_content,
+      p.product_name,
+      i.url,
+      s.original_price,
+      s.sell_price,
+      s.sku_name,
+      s.sku_img,
+      s.stock
+    FROM
+      shopping_cart c
+    INNER JOIN
+      product p
+    INNER JOIN
+      product_img i
+    INNER JOIN
+      product_sku s
+    ON
+      c.`product_id`=p.`product_id`
+    AND
+      p.`product_id`=i.`item_id`
+    AND
+      c.`sku_id`=s.`sku_id`
+    WHERE
+      c.`user_id`=#{userId}
+    AND
+      i.`is_main`=1
+    ORDER BY
+      cart_time
+    DESC
+  </select>
+
+  <!--通过购物车ID修改商品套餐数量-->
+  <update id="updateCartNumberByCartId">
+    UPDATE
+      shopping_cart
+    SET
+      cart_number=#{cartNumber}
+    WHERE
+      cart_id=#{cartId}
+  </update>
+
+  <!--根据购物车ID集合查询购物车信息-->
+  <select id="selectShoppingCartByCartId" resultMap="ShoppingCartToProductToProductImgMap">
+    SELECT
+      c.cart_id,
+      c.product_id,
+      c.sku_id,
+      c.sku_props,
+      c.user_id,
+      c.cart_number,
+      c.cart_time,
+      c.product_price,
+      c.status,
+      c.created_time,
+      c.created_by,
+      c.updated_time,
+      c.updated_by,
+      p.product_content,
+      p.product_name,
+      i.url,
+      s.original_price,
+      s.sell_price,
+      s.sku_name,
+      s.sku_img,
+      s.stock
+    FROM
+      shopping_cart c
+        INNER JOIN
+      product p
+        INNER JOIN
+      product_img i
+        INNER JOIN
+      product_sku s
+      ON
+      c.`product_id`=p.`product_id`
+      AND
+      p.`product_id`=i.`item_id`
+      AND
+      c.`sku_id`=s.`sku_id`
+      WHERE
+      i.`is_main`=1
+      AND
+      c.cart_id
+      IN
+    <foreach collection="cIds" item="cId" separator="," open="(" close=")">
+      #{cId}
+    </foreach>
+     ORDER BY
+     c.cart_time
+     DESC
+  </select>
+
+</mapper>

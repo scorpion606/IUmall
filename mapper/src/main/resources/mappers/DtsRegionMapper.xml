@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scorpion.mapper.DtsRegionMapper">
+  <!--行政区域表三级分类-->
+  <resultMap id="dtsRegionMap" type="com.scorpion.entity.DtsRegionVO">
+
+    <id column="id1" jdbcType="INTEGER" property="id" />
+    <result column="pid1" jdbcType="INTEGER" property="pid" />
+    <result column="name1" jdbcType="VARCHAR" property="name" />
+    <result column="type1" jdbcType="TINYINT" property="type" />
+    <result column="code1" jdbcType="INTEGER" property="code" />
+    <result column="enabled1" jdbcType="INTEGER" property="enabled" />
+    <collection property="dtsRegions" ofType="com.scorpion.entity.DtsRegionVO">
+      <id column="id2" jdbcType="INTEGER" property="id" />
+      <result column="pid2" jdbcType="INTEGER" property="pid" />
+      <result column="name2" jdbcType="VARCHAR" property="name" />
+      <result column="type2" jdbcType="TINYINT" property="type" />
+      <result column="code2" jdbcType="INTEGER" property="code" />
+      <result column="enabled2" jdbcType="INTEGER" property="enabled" />
+      <collection property="dtsRegions" ofType="com.scorpion.entity.DtsRegionVO">
+        <id column="id3" jdbcType="INTEGER" property="id" />
+        <result column="pid3" jdbcType="INTEGER" property="pid" />
+        <result column="name3" jdbcType="VARCHAR" property="name" />
+        <result column="type3" jdbcType="TINYINT" property="type" />
+        <result column="code3" jdbcType="INTEGER" property="code" />
+        <result column="enabled3" jdbcType="INTEGER" property="enabled" />
+      </collection>
+    </collection>
+  </resultMap>
+  <!--实现查找一级、二级、三级行政区域-->
+    <select id="selectDtsRegion" resultMap="dtsRegionMap">
+      SELECT
+        d1.id "id1",
+        d1.pid "pid1",
+        d1.name "name1",
+        d1.type "type1",
+        d1.code "code1",
+        d1.enabled "enable1",
+        d2.id "id2",
+        d2.pid "pid2",
+        d2.name "name2",
+        d2.type "type2",
+        d2.code "code2",
+        d2.enabled "enabled2",
+        d3.id "id3",
+        d3.pid "pid3",
+        d3.name "name3",
+        d3.type "type3",
+        d3.code "code3",
+        d3.enabled "enabled3"
+      FROM
+        dts_region d1
+          INNER JOIN
+        dts_region d2
+        ON d2.pid=d1.id
+          LEFT JOIN dts_region d3
+                    ON d3.pid=d2.id
+      WHERE d1.type=1 AND d1.enabled=1
+    </select>
+</mapper>

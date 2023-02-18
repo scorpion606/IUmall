@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scorpion.mapper.IuFootPrintMapper">
+  <resultMap id="BaseResultMap" type="com.scorpion.entity.IuFootPrint">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="deleted" jdbcType="BIT" property="deleted" />
+  </resultMap>
+
+  <resultMap id="FootPrintToProductToProductImgMap" type="com.scorpion.entity.IuFootPrintVo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="deleted" jdbcType="BIT" property="deleted" />
+    <association property="productVos" column="goods_id" select="com.scorpion.mapper.ProductMapper.selectProductByProductId"></association>
+  </resultMap>
+  <select id="selectFootPrintByUserId" resultMap="FootPrintToProductToProductImgMap">
+    select
+        id,
+        user_id,
+        goods_id,
+        add_time,
+        update_time,
+        deleted
+    from
+        iu_footprint
+    where
+        user_id=#{userId}
+    and
+        deleted=#{deleted}
+    and
+        DATE_FORMAT( update_time, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+    order by
+        update_time
+    desc
+  </select>
+
+    <select id="selectLessOneDayFootPrint" resultMap="FootPrintToProductToProductImgMap">
+        SELECT
+            id,
+            user_id,
+            goods_id,
+            add_time,
+            update_time,
+            deleted
+        FROM
+             iu_footprint
+        WHERE
+             DATE_FORMAT(update_time,'%Y%m%d') = DATE_FORMAT(#{date},'%Y%m%d')
+        and
+             user_id=#{userId}
+        and
+             deleted=0
+        order by
+             update_time
+        desc
+    </select>
+    <select id="selectOneDayFootPrintByPid" resultType="com.scorpion.entity.IuFootPrint">
+        SELECT
+            id,
+            user_id,
+            goods_id,
+            add_time,
+            update_time,
+            deleted
+        FROM
+            iu_footprint
+        WHERE
+            DATE_FORMAT(update_time,'%Y%m%d') = DATE_FORMAT(#{date},'%Y%m%d')
+          and
+            user_id=#{userId}
+          and
+            goods_id=#{pId}
+          and
+            deleted=0
+        order by
+            update_time
+                desc
+    </select>
+</mapper>

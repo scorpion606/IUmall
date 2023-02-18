@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scorpion.mapper.IndexImgMapper">
+  <resultMap id="BaseResultMap" type="com.scorpion.entity.IndexImg">
+    <id column="img_id" jdbcType="INTEGER" property="imgId" />
+    <result column="prod_id" jdbcType="INTEGER" property="prodId" />
+    <result column="category_id" jdbcType="INTEGER" property="categoryId" />
+    <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
+    <result column="img_bg_color" jdbcType="VARCHAR" property="imgBgColor" />
+    <result column="index_type" jdbcType="VARCHAR" property="indexType" />
+    <result column="seq" jdbcType="VARCHAR" property="seq" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="REVISION" jdbcType="INTEGER" property="revision" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="CREATED_TIME" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="UPDATED_TIME" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+    <select id="listIndexImg" resultMap="BaseResultMap">
+      select
+        img_id,
+        prod_id,
+        category_id,
+        img_url,
+        img_bg_color,
+        index_type,
+        seq,
+        status,
+        REVISION,
+        CREATED_BY,
+        CREATED_TIME,
+        UPDATED_BY,
+        UPDATED_TIME
+      from
+        index_img
+      where
+        status =1
+      ORDER BY
+        seq
+    </select>
+</mapper>

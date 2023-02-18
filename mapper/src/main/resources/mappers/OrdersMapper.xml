@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scorpion.mapper.OrdersMapper">
+
+  <!--订单关系映射-->
+  <resultMap id="BaseResultMap" type="com.scorpion.entity.Orders">
+    <id column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="receiver_name" jdbcType="VARCHAR" property="receiverName" />
+    <result column="receiver_phone" jdbcType="VARCHAR" property="receiverPhone" />
+    <result column="receiver_address" jdbcType="VARCHAR" property="receiverAddress" />
+    <result column="total_account"  property="totalAccount" />
+    <result column="actual_account"  property="actualAccount" />
+    <result column="pay_type" jdbcType="INTEGER" property="payType" />
+    <result column="order_remark" jdbcType="VARCHAR" property="orderRemark" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="delivery_type" jdbcType="VARCHAR" property="deliveryType" />
+    <result column="delivery_flow_id" jdbcType="VARCHAR" property="deliveryFlowId" />
+    <result column="order_freight"  property="orderFreight" />
+    <result column="delete_status" jdbcType="INTEGER" property="deleteStatus" />
+    <result column="REVISION" jdbcType="INTEGER" property="revision" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="CREATED_TIME" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="UPDATED_TIME" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
+    <result column="delivery_time" jdbcType="TIMESTAMP" property="deliveryTime" />
+    <result column="finish_time" jdbcType="TIMESTAMP" property="finishTime" />
+    <result column="cancel_time" jdbcType="TIMESTAMP" property="cancelTime" />
+    <result column="cancel_type" jdbcType="INTEGER" property="cancelType" />
+  </resultMap>
+
+  <!--订单-订单快照关系映射-->
+  <resultMap id="OrdersToOrdersItemMap" type="com.scorpion.entity.OrdersVo">
+    <id column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="receiver_name" jdbcType="VARCHAR" property="receiverName" />
+    <result column="receiver_phone" jdbcType="VARCHAR" property="receiverPhone" />
+    <result column="receiver_address" jdbcType="VARCHAR" property="receiverAddress" />
+    <result column="total_account"  property="totalAccount" />
+    <result column="actual_account"  property="actualAccount" />
+    <result column="pay_type" jdbcType="INTEGER" property="payType" />
+    <result column="order_remark" jdbcType="VARCHAR" property="orderRemark" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="delivery_type" jdbcType="VARCHAR" property="deliveryType" />
+    <result column="delivery_flow_id" jdbcType="VARCHAR" property="deliveryFlowId" />
+    <result column="order_freight"  property="orderFreight" />
+    <result column="delete_status" jdbcType="INTEGER" property="deleteStatus" />
+    <result column="REVISION" jdbcType="INTEGER" property="revision" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="CREATED_TIME" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="UPDATED_TIME" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
+    <result column="delivery_time" jdbcType="TIMESTAMP" property="deliveryTime" />
+    <result column="finish_time" jdbcType="TIMESTAMP" property="finishTime" />
+    <result column="cancel_time" jdbcType="TIMESTAMP" property="cancelTime" />
+    <result column="cancel_type" jdbcType="INTEGER" property="cancelType" />
+    <collection property="orderItems" select="com.scorpion.mapper.OrderItemMapper.selectOrderItem" column="order_id">
+
+    </collection>
+  </resultMap>
+
+  <!--通过用户ID或者动态确定订单状态查询订单-->
+    <select id="selectOrdersByUIdOrStatus" resultMap="OrdersToOrdersItemMap">
+    select
+        order_id,
+        user_id,
+        product_name,
+        receiver_name,
+        receiver_phone,
+        receiver_address,
+        total_account,
+        actual_account,
+        pay_type,
+        order_remark,
+        status,
+        delivery_type,
+        delivery_flow_id,
+        order_freight,
+        delete_status,
+        REVISION,
+        CREATED_BY,
+        CREATED_TIME,
+        UPDATED_BY,
+        UPDATED_TIME,
+        pay_time,
+        delivery_time,
+        finish_time,
+        cancel_time,
+        cancel_type
+    from
+        orders
+    where
+        user_id=#{userId}
+    <if test="status!=null">
+    and status=#{status}
+    </if>
+    and delete_status=0
+    order by CREATED_TIME desc
+    limit #{start},#{limit}
+    </select>
+
+
+    <!--通过订单ID查找订单详情-->
+    <select id="selectOrderByoId" resultMap="OrdersToOrdersItemMap">
+        SELECT
+            order_id,
+            user_id,
+            product_name,
+            receiver_name,
+            receiver_phone,
+            receiver_address,
+            total_account,
+            actual_account,
+            pay_type,
+            order_remark,
+            status,
+            delivery_type,
+            delivery_flow_id,
+            order_freight,
+            delete_status,
+            REVISION,
+            CREATED_BY,
+            CREATED_TIME,
+            UPDATED_BY,
+            UPDATED_TIME,
+            pay_time,
+            delivery_time,
+            finish_time,
+            cancel_time,
+            cancel_type
+        FROM
+            orders
+        WHERE
+            order_id=#{orderId}
+          AND
+            delete_status=0
+    </select>
+</mapper>

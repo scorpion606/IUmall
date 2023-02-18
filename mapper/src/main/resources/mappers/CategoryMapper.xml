@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scorpion.mapper.CategoryMapper">
+  <!--Category映射关系-->
+  <resultMap id="BaseResultMap" type="com.scorpion.entity.Category">
+    <id column="category_id" jdbcType="INTEGER" property="categoryId" />
+    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+    <result column="category_level" jdbcType="INTEGER" property="categoryLevel" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="category_icon" jdbcType="VARCHAR" property="categoryIcon" />
+    <result column="category_slogan" jdbcType="VARCHAR" property="categorySlogan" />
+    <result column="category_pic" jdbcType="VARCHAR" property="categoryPic" />
+    <result column="category_bg_color" jdbcType="VARCHAR" property="categoryBgColor" />
+    <result column="category_style" jdbcType="INTEGER" property="categoryStyle" />
+    <result column="category_seq" jdbcType="INTEGER" property="categorySeq" />
+    <result column="category_status" jdbcType="INTEGER" property="categoryStatus" />
+    <result column="url" jdbcType="VARCHAR" property="url"/>
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+  </resultMap>
+
+  <!--CategoryVo映射关系-->
+  <resultMap id="CategoryVoMap" type="com.scorpion.entity.CategoryVo">
+
+    <id column="category_id1" jdbcType="INTEGER" property="categoryId" />
+    <result column="category_name1" jdbcType="VARCHAR" property="categoryName" />
+    <result column="category_level1" jdbcType="INTEGER" property="categoryLevel" />
+    <result column="parent_id1" jdbcType="INTEGER" property="parentId" />
+    <result column="category_icon1" jdbcType="VARCHAR" property="categoryIcon" />
+    <result column="category_slogan1" jdbcType="VARCHAR" property="categorySlogan" />
+    <result column="category_pic1" jdbcType="VARCHAR" property="categoryPic" />
+    <result column="category_bg_color1" jdbcType="VARCHAR" property="categoryBgColor" />
+    <result column="category_style" jdbcType="INTEGER" property="categoryStyle" />
+    <result column="category_seq" jdbcType="INTEGER" property="categorySeq" />
+    <result column="category_status" jdbcType="INTEGER" property="categoryStatus" />
+    <result column="url" jdbcType="VARCHAR" property="url"/>
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+    <collection property="categories" ofType="com.scorpion.entity.CategoryVo">
+      <id column="category_id2" jdbcType="INTEGER" property="categoryId" />
+      <result column="category_name2" jdbcType="VARCHAR" property="categoryName" />
+      <result column="category_level2" jdbcType="INTEGER" property="categoryLevel" />
+      <result column="parent_id2" jdbcType="INTEGER" property="parentId" />
+      <collection property="categories" ofType="com.scorpion.entity.CategoryVo">
+        <id column="category_id3" jdbcType="INTEGER" property="categoryId" />
+        <result column="category_name3" jdbcType="VARCHAR" property="categoryName" />
+        <result column="category_level3" jdbcType="INTEGER" property="categoryLevel" />
+        <result column="parent_id3" jdbcType="INTEGER" property="parentId" />
+        <result column="category_icon3" jdbcType="VARCHAR" property="categoryIcon" />
+      </collection>
+    </collection>
+  </resultMap>
+
+  <!--子查询CategoryVo映射关系-->
+  <resultMap id="CategoryVoMap2" type="com.scorpion.entity.CategoryVo">
+
+    <id column="category_id" jdbcType="INTEGER" property="categoryId" />
+    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+    <result column="category_level" jdbcType="INTEGER" property="categoryLevel" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="category_icon" jdbcType="VARCHAR" property="categoryIcon" />
+    <result column="category_slogan" jdbcType="VARCHAR" property="categorySlogan" />
+    <result column="category_pic" jdbcType="VARCHAR" property="categoryPic" />
+    <result column="category_bg_color" jdbcType="VARCHAR" property="categoryBgColor" />
+    <result column="category_style" jdbcType="INTEGER" property="categoryStyle" />
+    <result column="category_seq" jdbcType="INTEGER" property="categorySeq" />
+    <result column="category_status" jdbcType="INTEGER" property="categoryStatus" />
+    <result column="url" jdbcType="VARCHAR" property="url"/>
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+    <collection column="category_id" property="categories" select="com.scorpion.mapper.CategoryMapper.listCategory2">
+      <collection column="category_id" property="categories" select="com.scorpion.mapper.CategoryMapper.listCategory2">
+
+      </collection>
+    </collection>
+  </resultMap>
+  <!--Wx子查询Category-Category映射关系-->
+  <resultMap id="WxCategoryVoMap2" type="com.scorpion.entity.CategoryVo">
+    <id column="category_id" jdbcType="INTEGER" property="categoryId" />
+    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+    <result column="category_level" jdbcType="INTEGER" property="categoryLevel" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="category_icon" jdbcType="VARCHAR" property="categoryIcon" />
+    <result column="category_slogan" jdbcType="VARCHAR" property="categorySlogan" />
+    <result column="category_pic" jdbcType="VARCHAR" property="categoryPic" />
+    <result column="category_bg_color" jdbcType="VARCHAR" property="categoryBgColor" />
+    <result column="category_style" jdbcType="INTEGER" property="categoryStyle" />
+    <result column="category_seq" jdbcType="INTEGER" property="categorySeq" />
+    <result column="category_status" jdbcType="INTEGER" property="categoryStatus" />
+    <result column="url" jdbcType="VARCHAR" property="url"/>
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+    <collection column="category_id" property="categories" select="com.scorpion.mapper.CategoryMapper.selectThirdLevelCategory">
+
+    </collection>
+  </resultMap>
+
+  <!--Category-Product映射关系-->
+  <resultMap id="CategoryProductMap" type="com.scorpion.entity.CategoryVo">
+
+    <id column="category_id" jdbcType="INTEGER" property="categoryId" />
+    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+    <result column="category_level" jdbcType="INTEGER" property="categoryLevel" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="category_icon" jdbcType="VARCHAR" property="categoryIcon" />
+    <result column="category_slogan" jdbcType="VARCHAR" property="categorySlogan" />
+    <result column="category_pic" jdbcType="VARCHAR" property="categoryPic" />
+    <result column="category_bg_color" jdbcType="VARCHAR" property="categoryBgColor" />
+    <result column="category_style" jdbcType="INTEGER" property="categoryStyle" />
+    <result column="category_seq" jdbcType="INTEGER" property="categorySeq" />
+    <result column="category_status" jdbcType="INTEGER" property="categoryStatus" />
+    <result column="url" jdbcType="VARCHAR" property="url"/>
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+    <collection column="category_id" property="products" select="com.scorpion.mapper.ProductMapper.selectTopSexProductions">
+
+    </collection>
+  </resultMap>
+
+  <!--Wx-Category-Product映射关系-->
+  <resultMap id="WxCategoryProductMap" type="com.scorpion.entity.CategoryVo">
+
+    <id column="category_id" jdbcType="INTEGER" property="categoryId" />
+    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+    <result column="category_level" jdbcType="INTEGER" property="categoryLevel" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="category_icon" jdbcType="VARCHAR" property="categoryIcon" />
+    <result column="category_slogan" jdbcType="VARCHAR" property="categorySlogan" />
+    <result column="category_pic" jdbcType="VARCHAR" property="categoryPic" />
+    <result column="category_bg_color" jdbcType="VARCHAR" property="categoryBgColor" />
+    <result column="category_style" jdbcType="INTEGER" property="categoryStyle" />
+    <result column="category_seq" jdbcType="INTEGER" property="categorySeq" />
+    <result column="category_status" jdbcType="INTEGER" property="categoryStatus" />
+    <result column="url" jdbcType="VARCHAR" property="url"/>
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+    <collection column="category_id" property="products" select="com.scorpion.mapper.ProductMapper.selectSwitchProduct">
+
+    </collection>
+  </resultMap>
+
+  <!--连接查询查找商品分类信息-->
+  <select id="listCategory" resultMap="CategoryVoMap">
+      SELECT
+        c1.`category_id` "category_id1",
+        c1.`category_name` "category_name1",
+        c1.`category_level` "category_level1" ,
+        c1.`parent_id` "patent_id1",
+        c1.`category_icon` "category_icon1",
+        c1.`category_slogan` "category_slogan1",
+        c1.`category_pic` "category_pic1",
+        c1.`category_bg_color` "category_bg_color1",
+        c1.`category_style` "category_style1",
+        c1.`category_seq` "categoryseq1",
+        c1.`category_status` "category_status1",
+        c1.`url` "url1",
+        c1.`deleted` "deleted1",
+        c2.`category_id` "category_id2",
+        c2.`category_name` "category_name2",
+        c2.`category_level` "category_level2" ,
+        c2.`parent_id` "patent_id2",
+        c3.`category_id` "category_id3",
+        c3.`category_name` "category_name3",
+        c3.`category_level` "category_level3" ,
+        c3.`parent_id` "patent_id3",
+        c3.`category_icon` "category_icon3"
+
+      FROM
+        category c1
+      INNER JOIN
+        category c2
+      ON
+          c2.`parent_id`=c1.`category_id`
+      LEFT JOIN
+        category c3
+      ON c3.`parent_id`=c2.`category_id`
+      WHERE c1.`category_level`=1
+      ORDER BY
+        c1.category_seq
+    </select>
+
+  <!--根据父级查询的ID查询子级分类-->
+  <select id="listCategory2" resultMap="CategoryVoMap2">
+      select
+        category_id,
+        category_name,
+        category_level,
+        parent_id,
+        category_icon,
+        category_slogan,
+        category_pic,
+        category_bg_color,
+        category_style,
+        category_seq,
+        category_status,
+        url,
+        deleted
+      from
+        category
+      where
+        parent_id = #{parentID}
+      and
+        deleted=0
+      order by
+        category_seq
+  </select>
+
+  <!--查找所有一级分类-->
+  <select id="selectFirstLevelCategories" resultMap="CategoryProductMap">
+    select
+      category_id,
+      category_name,
+      category_level,
+      parent_id,
+      category_icon,
+      category_slogan,
+      category_pic,
+      category_bg_color,
+      category_style,
+      category_seq,
+      category_status,
+      url,
+      deleted
+    from
+      category
+    where
+      category_level=1
+    AND
+      deleted=0
+  </select>
+
+  <!--查找首页切换分类-->
+  <select id="selectSwitchNavigation" resultMap="WxCategoryProductMap">
+    SELECT
+      category_id,
+      category_name,
+      category_level,
+      parent_id,
+      category_icon,
+      category_slogan,
+      category_pic,
+      category_bg_color,
+      category_style,
+      category_seq,
+      category_status,
+      url,
+      deleted
+    FROM
+      category
+    WHERE
+      category_style=2
+    AND
+      category_status=1
+    AND
+      deleted=0
+    ORDER BY
+      category_seq
+  </select>
+  <!--查找楼层分类-->
+  <select id="selectFloorCategory" resultMap="WxCategoryVoMap2">
+    SELECT
+      category_id,
+      category_name,
+      category_level,
+      parent_id,
+      category_icon,
+      category_slogan,
+      category_pic,
+      category_bg_color,
+      category_style,
+      category_seq,
+      category_status,
+      url,
+      deleted
+    FROM
+      category
+    WHERE
+      category_level=2
+    AND
+      category_status=1
+    AND
+      category_style=0
+    AND
+      deleted=0
+    ORDER BY
+      category_seq
+    LIMIT 0,3
+  </select>
+  <!--查找三级分类-->
+  <select id="selectThirdLevelCategory" resultMap="BaseResultMap">
+    SELECT
+      category_id,
+      category_name,
+      category_level,
+      parent_id,
+      category_icon,
+      category_slogan,
+      category_pic,
+      category_bg_color,
+      category_style,
+      category_seq,
+      category_status,
+      url,
+      deleted
+    FROM
+      category
+    WHERE
+      parent_id=#{categoryId}
+      AND
+      category_level=3
+      AND
+      category_status=1
+      AND
+      category_style=0
+      AND
+      deleted=0
+    ORDER BY
+      category_seq
+      LIMIT 0,5
+  </select>
+
+</mapper>

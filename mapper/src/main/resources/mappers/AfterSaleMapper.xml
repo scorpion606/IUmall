@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scorpion.mapper.AfterSaleMapper">
+  <resultMap id="BaseResultMap" type="com.scorpion.entity.AfterSale">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="delete_flag" jdbcType="BIT" property="deleteFlag" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="account_type" jdbcType="VARCHAR" property="accountType" />
+    <result column="actual_refund_price" jdbcType="DOUBLE" property="actualRefundPrice" />
+    <result column="after_sale_image" jdbcType="VARCHAR" property="afterSaleImage" />
+    <result column="apply_refund_price" jdbcType="DOUBLE" property="applyRefundPrice" />
+    <result column="audit_remark" jdbcType="VARCHAR" property="auditRemark" />
+    <result column="bank_account_name" jdbcType="VARCHAR" property="bankAccountName" />
+    <result column="bank_account_number" jdbcType="VARCHAR" property="bankAccountNumber" />
+    <result column="bank_deposit_name" jdbcType="VARCHAR" property="bankDepositName" />
+    <result column="flow_price" jdbcType="DOUBLE" property="flowPrice" />
+    <result column="goods_id" jdbcType="VARCHAR" property="goodsId" />
+    <result column="goods_image" jdbcType="VARCHAR" property="goodsImage" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="m_deliver_time" jdbcType="TIMESTAMP" property="mDeliverTime" />
+    <result column="m_logistics_code" jdbcType="VARCHAR" property="mLogisticsCode" />
+    <result column="m_logistics_name" jdbcType="VARCHAR" property="mLogisticsName" />
+    <result column="m_logistics_no" jdbcType="VARCHAR" property="mLogisticsNo" />
+    <result column="member_id" jdbcType="VARCHAR" property="memberId" />
+    <result column="member_name" jdbcType="VARCHAR" property="memberName" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="order_sn" jdbcType="VARCHAR" property="orderSn" />
+    <result column="pay_order_no" jdbcType="VARCHAR" property="payOrderNo" />
+    <result column="problem_desc" jdbcType="VARCHAR" property="problemDesc" />
+    <result column="reason" jdbcType="VARCHAR" property="reason" />
+    <result column="refund_point" jdbcType="INTEGER" property="refundPoint" />
+    <result column="refund_time" jdbcType="TIMESTAMP" property="refundTime" />
+    <result column="refund_way" jdbcType="VARCHAR" property="refundWay" />
+    <result column="store_id" jdbcType="VARCHAR" property="storeId" />
+    <result column="store_name" jdbcType="VARCHAR" property="storeName" />
+    <result column="service_status" jdbcType="VARCHAR" property="serviceStatus" />
+    <result column="service_type" jdbcType="VARCHAR" property="serviceType" />
+    <result column="sku_id" jdbcType="VARCHAR" property="skuId" />
+    <result column="sn" jdbcType="VARCHAR" property="sn" />
+    <result column="trade_sn" jdbcType="VARCHAR" property="tradeSn" />
+    <result column="order_item_sn" jdbcType="VARCHAR" property="orderItemSn" />
+    <result column="specs" jdbcType="LONGVARCHAR" property="specs" />
+  </resultMap>
+</mapper>

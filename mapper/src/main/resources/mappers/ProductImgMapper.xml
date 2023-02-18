@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scorpion.mapper.ProductImgMapper">
+  <resultMap id="BaseResultMap" type="com.scorpion.entity.ProductImg">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="item_id" jdbcType="INTEGER" property="itemId" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="seq" jdbcType="INTEGER" property="seq" />
+    <result column="is_main" jdbcType="INTEGER" property="isMain" />
+    <result column="is_ad" jdbcType="INTEGER" property="isAd" />
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+    <result column="REVISION" jdbcType="INTEGER" property="revision" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="CREATED_TIME" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="UPDATED_TIME" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+    <select id="selectProductImgsByProductId" resultType="com.scorpion.entity.ProductImg">
+      select
+        id,
+        item_id,
+        url,
+        seq,
+        is_main,
+        is_ad,
+        deleted,
+        REVISION,
+        CREATED_BY,
+        CREATED_TIME,
+        UPDATED_BY,
+        UPDATED_TIME
+      from
+        product_img
+      where
+        item_id =#{productId}
+        and
+        is_main=1
+      order by seq
+    </select>
+  <select id="selectProductDetailImagesByPid" resultMap="BaseResultMap">
+    select
+      id,
+      item_id,
+      url,
+      seq,
+      is_main,
+      is_ad,
+      deleted,
+      REVISION,
+      CREATED_BY,
+      CREATED_TIME,
+      UPDATED_BY,
+      UPDATED_TIME
+    from
+      product_img
+    where
+      item_id =#{productId}
+      and
+      is_main=2
+      order by seq
+  </select>
+</mapper>

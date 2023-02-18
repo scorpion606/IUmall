@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scorpion.mapper.UserAddressMapper">
+  <resultMap id="BaseResultMap" type="com.scorpion.entity.UserAddress">
+    <id column="address_id" jdbcType="INTEGER" property="addressId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="receiver_name" jdbcType="VARCHAR" property="receiverName" />
+    <result column="receiver_number" jdbcType="VARCHAR" property="receiverNumber" />
+    <result column="seq_number" jdbcType="INTEGER" property="seqNumber" />
+    <result column="campus" jdbcType="VARCHAR" property="campus" />
+    <result column="building_number" jdbcType="VARCHAR" property="buildingNumber" />
+    <result column="dormitory_number" jdbcType="VARCHAR" property="dormitoryNumber" />
+    <result column="address_details" jdbcType="VARCHAR" property="addressDetails" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="default_address" jdbcType="INTEGER" property="defaultAddress" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="CREATED_TIME" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="UPDATED_TIME" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+    <update id="updateStatusByAId">
+      update
+        user_address
+      set
+        status=#{status}
+      where
+        address_id=#{aId}
+    </update>
+</mapper>

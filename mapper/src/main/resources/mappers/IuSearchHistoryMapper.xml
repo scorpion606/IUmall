@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scorpion.mapper.IuSearchHistoryMapper">
+  <resultMap id="BaseResultMap" type="com.scorpion.entity.IuSearchHistory">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="keyword" jdbcType="VARCHAR" property="keyword" />
+    <result column="from_name" jdbcType="VARCHAR" property="fromName" />
+    <result column="number" jdbcType="INTEGER" property="number"/>
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="deleted" jdbcType="BIT" property="deleted" />
+  </resultMap>
+
+  <select id="selectSearchHistoryByUserId" resultMap="BaseResultMap">
+    select
+      id,
+      user_id,
+      keyword,
+      from_name,
+      number,
+      add_time,
+      update_time,
+      deleted
+    from
+      iu_search_history
+    where
+      user_id=#{userId}
+    and
+      deleted=0
+    order by
+      update_time desc
+    limit 0,10
+  </select>
+  <update id="updateDeletedStatus">
+    update
+      iu_search_history
+    set
+      deleted =#{status}
+    where
+      user_id=#{userId}
+    and
+      keyword=#{keyword}
+  </update>
+  <update id="updateDeletedAllStatus">
+    update
+      iu_search_history
+    set
+      deleted =#{status}
+    where
+      user_id=#{userId}
+  </update>
+</mapper>

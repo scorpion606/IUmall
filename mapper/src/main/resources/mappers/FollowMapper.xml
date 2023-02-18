@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scorpion.mapper.FollowMapper">
+  <resultMap id="BaseResultMap" type="com.scorpion.entity.Follow">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="followed_id" jdbcType="INTEGER" property="followedId" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="special attention" jdbcType="TINYINT" property="specialAttention" />
+    <result column="deleted" jdbcType="TINYINT" property="deleted" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+</mapper>

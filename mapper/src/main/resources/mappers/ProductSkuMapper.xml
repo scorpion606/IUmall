@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scorpion.mapper.ProductSkuMapper">
+
+  <!--套餐映射-->
+  <resultMap id="BaseResultMap" type="com.scorpion.entity.ProductSku">
+    <id column="sku_id" jdbcType="INTEGER" property="skuId" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="sku_name" jdbcType="VARCHAR" property="skuName" />
+    <result column="sku_img" jdbcType="VARCHAR" property="skuImg" />
+    <result column="untilled" jdbcType="INTEGER" property="untilled" />
+    <result column="original_price" jdbcType="DECIMAL" property="originalPrice" />
+    <result column="sell_price" jdbcType="DECIMAL" property="sellPrice" />
+    <result column="discount" jdbcType="DECIMAL" property="discount" />
+    <result column="stock" jdbcType="INTEGER" property="stock" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="oldness" jdbcType="VARCHAR" property="oldness"/>
+    <result column="REVISION" jdbcType="INTEGER" property="revision" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="CREATED_TIME" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="UPDATED_TIME" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="purchased_time" jdbcType="TIMESTAMP" property="purchasedTime" />
+  </resultMap>
+  <!--套餐表-套餐销售属性映射-->
+  <resultMap id="ProductSkuToSsavMap" type="com.scorpion.entity.ProductSkuVo">
+    <id column="sku_id" jdbcType="INTEGER" property="skuId" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="sku_name" jdbcType="VARCHAR" property="skuName" />
+    <result column="sku_img" jdbcType="VARCHAR" property="skuImg" />
+    <result column="untilled" jdbcType="INTEGER" property="untilled" />
+    <result column="original_price" jdbcType="DECIMAL" property="originalPrice" />
+    <result column="sell_price" jdbcType="DECIMAL" property="sellPrice" />
+    <result column="discount" jdbcType="DECIMAL" property="discount" />
+    <result column="stock" jdbcType="INTEGER" property="stock" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="oldness" jdbcType="VARCHAR" property="oldness"/>
+    <result column="REVISION" jdbcType="INTEGER" property="revision" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="CREATED_TIME" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="UPDATED_TIME" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="purchased_time" jdbcType="TIMESTAMP" property="purchasedTime" />
+    <collection column="sku_id"  property="pmsSkuSaleAttrValue" select="com.scorpion.mapper.PmsSkuSaleAttrValueMapper.selectSkuSaleAttrValueBySkuId">
+
+    </collection>
+    <collection  column="sku_id" property="pmsSkuImages" select="com.scorpion.mapper.PmsSkuImagesMapper.selectSkuImages">
+
+    </collection>
+  </resultMap>
+
+  <resultMap id="SkutoAttrMap" type="com.scorpion.entity.ProductSkuVo">
+    <id column="sku_id" jdbcType="INTEGER" property="skuId" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="sku_name" jdbcType="VARCHAR" property="skuName" />
+    <result column="sku_img" jdbcType="VARCHAR" property="skuImg" />
+    <result column="untilled" jdbcType="INTEGER" property="untilled" />
+    <result column="original_price" jdbcType="DECIMAL" property="originalPrice" />
+    <result column="sell_price" jdbcType="DECIMAL" property="sellPrice" />
+    <result column="discount" jdbcType="DECIMAL" property="discount" />
+    <result column="stock" jdbcType="INTEGER" property="stock" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="oldness" jdbcType="VARCHAR" property="oldness"/>
+    <result column="REVISION" jdbcType="INTEGER" property="revision" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="CREATED_TIME" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="UPDATED_TIME" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="purchased_time" jdbcType="TIMESTAMP" property="purchasedTime" />
+    <collection column="sku_id"  property="pmsSkuSaleAttrValue" select="com.scorpion.mapper.PmsSkuSaleAttrValueMapper.selectSkuSaleAttrValueBySkuId">
+
+    </collection>
+  </resultMap>
+  <!--实现查找商品套餐中价格最低的一个-->
+  <select id="selectProductSkuByProductId" resultMap="SkutoAttrMap">
+    select
+      sku_id,
+      product_id,
+      sku_name,
+      sku_img,
+      untilled,
+      original_price,
+      sell_price,
+      discount,
+      stock,
+      oldness,
+      status,
+      CREATED_BY,
+      CREATED_TIME,
+      UPDATED_BY,
+      UPDATED_TIME,
+      purchased_time
+    from
+      product_sku
+    where
+      product_id=#{productId}
+    and
+      status=1
+    ORDER BY
+      untilled
+    limit 0 , 1
+    </select>
+
+  <!--实现查找商品套餐列表-->
+  <select id="selectProductSkuByPid" resultMap="ProductSkuToSsavMap">
+    select
+      sku_id,
+      product_id,
+      sku_name,
+      sku_img,
+      untilled,
+      original_price,
+      sell_price,
+      discount,
+      stock,
+      status,
+      oldness,
+      CREATED_BY,
+      CREATED_TIME,
+      UPDATED_BY,
+      UPDATED_TIME,
+      purchased_time
+    from
+      product_sku
+    where
+      product_id=#{productId}
+    and
+      status=1
+    order by untilled
+  </select>
+  <select id="selectProductSkuBySkuId" resultMap="SkutoAttrMap">
+    select
+      sku_id,
+      product_id,
+      sku_name,
+      sku_img,
+      untilled,
+      original_price,
+      sell_price,
+      discount,
+      stock,
+      status,
+      oldness,
+      CREATED_BY,
+      CREATED_TIME,
+      UPDATED_BY,
+      UPDATED_TIME,
+      purchased_time
+    from
+      product_sku
+    where
+      sku_id=#{skuId}
+      and
+      status=1
+  </select>
+</mapper>

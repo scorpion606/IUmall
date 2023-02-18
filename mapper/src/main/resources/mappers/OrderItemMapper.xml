@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scorpion.mapper.OrderItemMapper">
+  <resultMap id="BaseResultMap" type="com.scorpion.entity.OrderItem">
+    <id column="item_id" jdbcType="INTEGER" property="itemId" />
+    <result column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="product_img" jdbcType="VARCHAR" property="productImg" />
+    <result column="sku_id" jdbcType="INTEGER" property="skuId" />
+    <result column="sku_name" jdbcType="VARCHAR" property="skuName" />
+    <result column="product_price"  property="productPrice" />
+    <result column="buy_count" jdbcType="INTEGER" property="buyCount" />
+    <result column="total_account"  property="totalAccount" />
+    <result column="basket_data" jdbcType="TIMESTAMP" property="basketData" />
+    <result column="buy_time" jdbcType="TIMESTAMP" property="buyTime" />
+    <result column="is_commont" jdbcType="INTEGER" property="isCommont" />
+      <result column="sku_attr" jdbcType="VARCHAR" property="skuAttr" />
+      <result column="deleted" jdbcType="INTEGER"  property="deleted" />
+  </resultMap>
+    <update id="updateOrderItemByItemId">
+        update
+            order_item
+        set
+            deleted=#{deleted}
+        where
+            order_id=#{orderId}
+    </update>
+    <select id="selectOrderItem" resultMap="BaseResultMap">
+        select
+            item_id,
+            order_id,
+            product_id,
+            product_name,
+            product_img,
+            sku_id,
+            sku_name,
+            product_price,
+            buy_count,
+            total_account,
+            basket_data,
+            buy_time,
+            is_commont,
+            sku_attr,
+            deleted
+        from
+            order_item
+        where
+            order_id=#{orderId}
+        and
+            deleted=0
+    </select>
+</mapper>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scorpion.mapper.DynamicMapper">
+  <resultMap id="BaseResultMap" type="com.scorpion.entity.Dynamic">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="dynamic_name" jdbcType="VARCHAR" property="dynamicName" />
+    <result column="dynamic_content" jdbcType="VARCHAR" property="dynamicContent" />
+    <result column="scan_total" jdbcType="INTEGER" property="scanTotal" />
+    <result column="praise_total" jdbcType="INTEGER" property="praiseTotal" />
+    <result column="comment_total" jdbcType="INTEGER" property="commentTotal" />
+    <result column="collect_total" jdbcType="INTEGER" property="collectTotal" />
+    <result column="forward_total" jdbcType="INTEGER" property="forwardTotal" />
+    <result column="is_forward" jdbcType="TINYINT" property="isForward" />
+    <result column="forwarded_id" jdbcType="INTEGER" property="forwardedId" />
+    <result column="forwarded_user_id" jdbcType="INTEGER" property="forwardedUserId" />
+    <result column="forwarded_nick_name" jdbcType="VARCHAR" property="forwardedNickName" />
+    <result column="share_url" jdbcType="VARCHAR" property="shareUrl" />
+    <result column="deleted" jdbcType="TINYINT" property="deleted" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <resultMap id="DynamicVoMap" type="com.scorpion.entity.DynamicVo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="dynamic_name" jdbcType="VARCHAR" property="dynamicName" />
+    <result column="praise_total" jdbcType="INTEGER" property="praiseTotal" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
+    <result column="url" jdbcType="VARCHAR" property="url"/>
+  </resultMap>
+    <select id="selectListDynamic" resultMap="DynamicVoMap">
+      SELECT
+        d.id,
+        d.dynamic_name,
+        d.praise_total,
+        u.nick_name,
+        di.url
+      FROM
+        iu_dynamic d
+          INNER JOIN
+        users u
+        on
+          d.user_id=u.user_id
+          INNER JOIN
+        iu_dynamic_image di
+        on
+              d.id=di.dynamic_id
+            AND
+              di.is_main=1
+            AND
+              di.deleted=0
+      WHERE
+        d.deleted=0
+      ORDER BY d.add_time DESC
+        LIMIT #{start},#{limit}
+    </select>
+</mapper>

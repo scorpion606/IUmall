@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scorpion.mapper.IuNavigationProductRelationMapper">
+  <resultMap id="BaseResultMap" type="com.scorpion.entity.IuNavigationProductRelation">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="navigation_id" jdbcType="INTEGER" property="navigationId" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+  </resultMap>
+  <resultMap id="IuNavigationProductRelationToProductVoMap" type="com.scorpion.entity.IuNavigationProductRelationVO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="navigation_id" jdbcType="INTEGER" property="navigationId" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <collection property="products" select="com.scorpion.mapper.ProductMapper.selectProductBypId" column="product_id"></collection>
+    <collection property="productImgs" select="com.scorpion.mapper.ProductImgMapper.selectProductImgsByProductId" column="product_id">
+    </collection>
+    <collection property="productSkus" select="com.scorpion.mapper.ProductSkuMapper.selectProductSkuByProductId" column="product_id">
+    </collection>
+  </resultMap>
+  <select id="selectNavigationToProductVo" resultMap="IuNavigationProductRelationToProductVoMap">
+    select
+      id,
+      navigation_id,
+      product_id
+    from
+    iu_navigation_product_relation
+    where
+      navigation_id=#{navigationId}
+    limit #{start},#{limit}
+  </select>
+</mapper>

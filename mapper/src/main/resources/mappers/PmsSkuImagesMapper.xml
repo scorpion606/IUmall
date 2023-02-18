@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scorpion.mapper.PmsSkuImagesMapper">
+  <resultMap id="BaseResultMap" type="com.scorpion.entity.PmsSkuImages">
+
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="sku_id" jdbcType="BIGINT" property="skuId" />
+    <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
+    <result column="img_sort" jdbcType="INTEGER" property="imgSort" />
+    <result column="default_img" jdbcType="INTEGER" property="defaultImg" />
+  </resultMap>
+    <select id="selectSkuImages" resultMap="BaseResultMap">
+      SELECT
+        id,
+        sku_id,
+        img_url,
+        img_sort,
+        default_img
+      FROM
+        pms_sku_images
+      WHERE
+        sku_id IN(#{skuId})
+      <if test="img_sort!=null">
+      order by img_sort
+      </if>
+    </select>
+</mapper>

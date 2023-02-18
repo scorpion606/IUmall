@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scorpion.mapper.IuTabsMapper">
+  <resultMap id="BaseResultMap" type="com.scorpion.entity.IuTabs">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="line_bg" jdbcType="VARCHAR" property="lineBg" />
+    <result column="seq" jdbcType="INTEGER" property="seq" />
+    <result column="collect_name" property="collectName"/>
+    <result column="is_collect" property="isCollect"/>
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+    <result column="created_by" jdbcType="VARCHAR" property="createdBy" />
+    <result column="creted_time" jdbcType="TIMESTAMP" property="cretedTime" />
+    <result column="updated_by" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+
+</mapper>

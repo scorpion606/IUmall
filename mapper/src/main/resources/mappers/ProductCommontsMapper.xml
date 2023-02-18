@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scorpion.mapper.ProductCommontsMapper">
+  <!--商品评论映射关系-->
+  <resultMap id="BaseResultMap" type="com.scorpion.entity.ProductCommonts">
+    <id column="comont_id" jdbcType="INTEGER" property="comontId" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="order_item_id" jdbcType="INTEGER" property="orderItemId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="is_anonymous" jdbcType="INTEGER" property="isAnonymous" />
+    <result column="comment_type" jdbcType="INTEGER" property="commentType" />
+    <result column="comment_level" jdbcType="INTEGER" property="commentLevel" />
+    <result column="comment_imgs" jdbcType="VARCHAR" property="commentImgs" />
+    <result column="comment_time" jdbcType="TIMESTAMP" property="commentTime" />
+    <result column="reply_status" jdbcType="INTEGER" property="replyStatus" />
+    <result column="reply_time" jdbcType="TIMESTAMP" property="replyTime" />
+    <result column="is_show" jdbcType="INTEGER" property="isShow" />
+    <result column="comment_content" jdbcType="LONGVARCHAR" property="commentContent" />
+    <result column="reply_content" jdbcType="LONGVARCHAR" property="replyContent" />
+  </resultMap>
+  <!--商品评论-用户信息映射关系-->
+  <resultMap id="ProductCommontsVoToUsersMap" type="com.scorpion.entity.ProductCommontsVo">
+    <id column="comont_id" jdbcType="INTEGER" property="comontId" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="order_item_id" jdbcType="INTEGER" property="orderItemId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="is_anonymous" jdbcType="INTEGER" property="isAnonymous" />
+    <result column="comment_type" jdbcType="INTEGER" property="commentType" />
+    <result column="comment_level" jdbcType="INTEGER" property="commentLevel" />
+    <result column="comment_imgs" jdbcType="VARCHAR" property="commentImgs" />
+    <result column="comment_time" jdbcType="TIMESTAMP" property="commentTime" />
+    <result column="reply_status" jdbcType="INTEGER" property="replyStatus" />
+    <result column="reply_time" jdbcType="TIMESTAMP" property="replyTime" />
+    <result column="is_show" jdbcType="INTEGER" property="isShow" />
+    <result column="comment_content" jdbcType="LONGVARCHAR" property="commentContent" />
+    <result column="reply_content" jdbcType="LONGVARCHAR" property="replyContent" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="avatra" jdbcType="VARCHAR" property="avatra" />
+  </resultMap>
+  <!--根据商品ID查找用户评论信息-->
+  <select id="selectProductCommontsByProductId" resultMap="ProductCommontsVoToUsersMap">
+    SELECT
+      u.`user_id`,
+      u.`user_name`,
+      u.`nick_name`,
+      u.`avatra`,
+      c.`comont_id`,
+      c.`product_id`,
+      c.`user_id`,
+      c.`order_item_id`,
+      c.`is_anonymous`,
+      c.`comment_time`,
+      c.`comment_content`,
+      c.`comment_imgs`,
+      c.`comment_time`,
+      c.`reply_status`,
+      c.`reply_content`,
+      c.`reply_time`,
+      c.`reply_time`
+    FROM
+      product_commonts c
+        INNER JOIN
+      users u
+      ON
+      c.`user_id`=u.`user_id`
+    WHERE
+      c.`product_id`=#{productId}
+      AND
+      c.`is_show`=1
+    ORDER BY
+      c.`comment_time`
+    DESC
+    limit #{start},#{limit}
+  </select>
+</mapper>
